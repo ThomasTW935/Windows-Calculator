@@ -1,0 +1,21 @@
+.nav{
+    display:flex;
+    &__burger{
+        $size: 2.5rem;
+        width: $size;
+        height: $size;
+        display:flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items:center;
+        gap: 10%;
+        &:hover,&:active{
+            background: $secondaryTextColor;
+        }
+        div{
+            width: 50%;
+            height: 3%;
+            background: $mainTextColor;
+        }
+    }
+}

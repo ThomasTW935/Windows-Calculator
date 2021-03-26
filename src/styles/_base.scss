@@ -1,12 +1,22 @@
 // CSS Reset
 
+/* Variables */
+$mainButtonBg: #060606;
+$secondaryButtonBg: #131313;
+$mainLayoutBg: #1f1f1f;
+$mainTextColor: #ffffff;
+$secondaryTextColor: #4c4c4c;
+
 /* Box sizing rules */
 *,
 *::before,
 *::after {
   box-sizing: border-box;
 }
-
+html{
+    font-family: sans-serif;
+    font-size: 16px;
+}
 /* Remove default margin */
 body,
 h1,
