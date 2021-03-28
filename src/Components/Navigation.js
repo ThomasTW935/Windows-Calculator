@@ -1,21 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-function Navigation() {
-    const data = {
-        weight: {
-            grams: 1,
-            kilograms: 1000,
-        },
-        length: {
-            meter: 1,
-            kilometer: 1000,
-        },
-        volume: {
-            milliliters:1,
-            liter: 1000
-        }
-    }
-    const [unit, setUnit] = useState('weight')
+function Navigation({data, unit,setUnit}) {
+    
+    
     return (
         <div className='nav'>
             <div className='nav__burger'>
@@ -30,7 +17,7 @@ function Navigation() {
                     )
                 }
             </select>      
-            <h3 className='nav__title'>{unit}</h3>
+            <h3 className='nav__title'>{unit.unit}</h3>
         </div>
     );
 }
