@@ -9,4 +9,15 @@
     transform: translate(-50%,-50%);
     background: $mainLayoutBg;
     color: $mainTextColor;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    flex-wrap: wrap;
+}
+
+.buttons{
+    height: 40%;
+    display:grid;
+    grid-template: repeat(5,1fr) / repeat(3,1fr);
+    gap: .2em;
 }

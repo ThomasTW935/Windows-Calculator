@@ -20,16 +20,21 @@ const data = {
 
 function App() {
   const [unit, setUnit] = useState('weight')
-
+  const [activeTile, setActiveTile] = useState(0)
+  const buttons = [``, `CE`, `DEL`,7,8,9,4,5,6,1,2,3,``,0,`.`]
   return (
     <div className="App">
       <Navigation data={data} unit={unit} setUnit={setUnit}/>
       <div className='display'>
-        <ConverterTile data={data} unit={unit}/>
-        <ConverterTile data={data} unit={unit}/>
+        <ConverterTile data={data} unit={unit} position={0} activeTile={activeTile} setActiveTile={setActiveTile}/>
+        <ConverterTile data={data} unit={unit} position={1} activeTile={activeTile} setActiveTile={setActiveTile}/>
       </div>
       <div className='buttons'>
-
+        {
+          buttons.map(button=>
+            <button>{button}</button>
+          )
+          }
       </div>
     </div>
   );

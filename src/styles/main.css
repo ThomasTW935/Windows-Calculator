@@ -117,6 +117,14 @@ select {
   background: #ffffff;
 }
 
+.converterTile p {
+  font-size: 2rem;
+}
+
+.converterTile .fontBold {
+  font-weight: bold;
+}
+
 .App {
   max-width: 375px;
   max-height: 667px;
@@ -129,5 +137,27 @@ select {
           transform: translate(-50%, -50%);
   background: #1f1f1f;
   color: #ffffff;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.buttons {
+  height: 40%;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: (1fr)[5];
+  -ms-grid-columns: (1fr)[3];
+      grid-template: repeat(5, 1fr)/repeat(3, 1fr);
+  gap: .2em;
 }
 /*# sourceMappingURL=main.css.map */
