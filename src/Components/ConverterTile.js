@@ -1,13 +1,21 @@
 import React from 'react';
 
-function ConverterTile({data,unit,position,activeTile,setActiveTile}) {
+function ConverterTile({data,unitCategory,tile,activeTile,setActiveTile}) {
+    let {id,value,unit} = tile
+
     return (
-        <div class='converterTile'>
-            <p className={ (activeTile === position) ? `fontBold` : `` } onClick={ () => { setActiveTile( (position) ? 1 : 0 ) } }>0</p>
+        <div className='converterTile'>
+            <p className={ (activeTile === id) ? `fontBold` : ``} onClick={  ()=>setActiveTile(id) } >{value}</p>
             <select>
                 {
-                    Object.keys(data[unit]).map(key=>
-                        <option>{key}</option>
+                    data.map((item,index)=>
+                        {
+                            if(item.category === unitCategory)
+                                {
+                                    return Object.keys(item['units']).map((value,index)=>
+                                    { return <option key={index}>{value}</option> }
+                                )}
+                        }
                     )
                 }           
             </select>
