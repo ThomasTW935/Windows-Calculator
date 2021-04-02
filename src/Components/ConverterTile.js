@@ -9,16 +9,21 @@ function ConverterTile({data,unitCategory,tile,activeTile,setActiveTile,dispatch
         let target = e.target
         let dataset = target.options[target.selectedIndex].dataset
         let {name,rate} = dataset
-        dispatch({type: ACTIONS.UPDATE_UNIT, payload: {id: id,name:name, rate: rate}})
+
+        if(id === activeTile.id) setActiveTile({...activeTile, rate: rate})
+        
+        dispatch({type: ACTIONS.UPDATE_UNIT, payload: {id: id,name:name, rate: rate, activeTile: activeTile, computedRate: rate/activeTile.rate}})
     }
+    // console.log(tile)
+    // console.log(activeTile)
 
     return (
         <div className='converterTile'>
             <p
-                className={ (activeTile === id) ? `fontBold` : ``} 
-                onClick={  ()=>setActiveTile(id) }
+                className={ (activeTile.id === id) ? `fontBold` : ``} 
+                onClick={  ()=>setActiveTile({...activeTile,id:id}) }
             >{value}</p>
-            <select value={name} onChange={ (e)=>{ handleOptionChange(e) } } >
+            <select className='select' value={name} onChange={ (e)=>{ handleOptionChange(e) } } >
                 {
                     data.map((item,index)=>
                         {

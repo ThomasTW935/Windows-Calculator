@@ -1,7 +1,7 @@
 import React from 'react';
 import { ACTIONS } from '../App';
 
-function Navigation({data, unitCategory,setUnitCategory, dispatch}) {
+function Navigation({data, unitCategory,setUnitCategory,activeTile,setActiveTile, dispatch}) {
     
     function handleOptionChange(e){
         let target = e.target
@@ -12,6 +12,7 @@ function Navigation({data, unitCategory,setUnitCategory, dispatch}) {
         let unitRate = dataset.rate
 
         setUnitCategory(target.value)
+        setActiveTile({ ...activeTile, value: 0 })
         dispatch({type: ACTIONS.UPDATE_UNIT, payload: { name: unitName, rate: unitRate }})
     }
     return (
@@ -21,7 +22,7 @@ function Navigation({data, unitCategory,setUnitCategory, dispatch}) {
                 <div></div>
                 <div></div>
             </div>
-            <select value={unitCategory} onChange={ (e)=>{ handleOptionChange(e) } }>
+            <select className='select' value={unitCategory} onChange={ (e)=>{ handleOptionChange(e) } }>
                 {
                     data.map(item=>
                         <option key={item.id} data-default={item.default} data-rate={item.units[item.default]} >{item.category}</option> 

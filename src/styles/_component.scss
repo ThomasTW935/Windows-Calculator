@@ -20,10 +20,32 @@
     }
 }
 .converterTile{
+    padding:1em 0;
     p{
         font-size: 2rem;
     }
     .fontBold{
+        font-size: 3rem;
         font-weight: bold;
+    }
+}
+
+.select{
+    border: transparent;
+    background-color: transparent;
+    color: $mainTextColor;
+    text-transform: capitalize;
+    option{background: inherit;}
+}
+
+.button{
+    color: $mainTextColor;
+    border: none;
+    background: transparent;
+    &__normal{
+        background: $mainButtonBg;
+    }
+    &__special{
+        background: $secondaryButtonBg;
     }
 }

@@ -117,12 +117,42 @@ select {
   background: #ffffff;
 }
 
+.converterTile {
+  padding: 1em 0;
+}
+
 .converterTile p {
   font-size: 2rem;
 }
 
 .converterTile .fontBold {
+  font-size: 3rem;
   font-weight: bold;
+}
+
+.select {
+  border: transparent;
+  background-color: transparent;
+  color: #ffffff;
+  text-transform: capitalize;
+}
+
+.select option {
+  background: inherit;
+}
+
+.button {
+  color: #ffffff;
+  border: none;
+  background: transparent;
+}
+
+.button__normal {
+  background: #060606;
+}
+
+.button__special {
+  background: #131313;
 }
 
 .App {
@@ -147,17 +177,24 @@ select {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
+  padding: .5em;
 }
 
-.buttons {
-  height: 40%;
+.tileCon {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (1fr)[2];
+      grid-template-columns: repeat(2, 1fr);
+  min-width: 50%;
+}
+
+.buttonCon {
+  height: 50%;
   display: -ms-grid;
   display: grid;
   -ms-grid-rows: (1fr)[5];
   -ms-grid-columns: (1fr)[3];
       grid-template: repeat(5, 1fr)/repeat(3, 1fr);
-  gap: .2em;
+  gap: 3px;
 }
 /*# sourceMappingURL=main.css.map */

@@ -46,17 +46,20 @@ const BUTTONS = {
 }
 
 function reducer(tiles,action){
+  console.log(tiles)
+  console.log(action)
   switch(action.type){
     case ACTIONS.UPDATE_UNIT: 
       return tiles.map(tile=>{
-        if(action.payload.id &&  action.payload.id !== tile.id) return tile
+        let payload = action.payload
+        if(payload.id && payload.activeTile.id !== tile.id && payload.id === tile.id) return {...tile, value: (payload.activeTile.value * action.payload.computedRate)}
         return {...tile, unit: {name: action.payload.name, rate: action.payload.rate}}
       })
     case ACTIONS.UPDATE_TILE_VALUES: 
       return tiles.map(tile=>{
         if(tile.id === action.payload.id) return {...tile, value: action.payload.value}
-        let newValue = action.payload.value * tile.unit.rate
-        return {...tile, value: newValue}
+        let newValue = ((action.payload.value*100) * (tile.unit.rate*100) / (100*100)).toFixed(2)
+        return {...tile, value: newValue.toLocaleString('en-US')}
       })
     default: return tiles
   }
@@ -67,46 +70,55 @@ function App() {
   const [tiles, dispatch] = useReducer(reducer,[
     {id: 101111,value:0, unit: {name: data[0].default, rate: data[0].units[data[0].default]}},
     {id: 121312321,value:0, unit: {name: data[0].default, rate: data[0].units[data[0].default]}},
+    {id: 12131232321,value:0, unit: {name: data[0].default, rate: data[0].units[data[0].default]}},
   ])
 
-  const [activeTile, setActiveTile] = useState(tiles[0].id)
-  const [activeTileValue, setActiveTileValue] = useState(0)
+  // const [activeTile, setActiveTile] = useState(tiles[0].id)
+  // const [activeTileValue, setActiveTileValue] = useState(0)
+  // const [actilveTiveRate, setActiveTileRate] = useState(tiles[0].unit.rate)
+  const [activeTile, setActiveTile] = useState({ id: tiles[0].id, value: 0, rate: tiles[0].unit.rate})
+
   useEffect(()=>{
     dispatch({
         type: ACTIONS.UPDATE_TILE_VALUES, 
         payload: { 
-          id: activeTile, 
-          value: activeTileValue  
+          id: activeTile.id, 
+          value: activeTile.value  
         }})
-  },[activeTileValue])
+  },[activeTile.value])
+
+  useEffect(()=>{
+    console.log(activeTile)
+  },[activeTile.id])
 
   function handleButtonClick(e){
     let target = e.target
     let value = target.innerHTML
     if(value === 'CE'){
-      setActiveTileValue(0)
+      setActiveTile({...activeTile,value: 0})
       return
     }
     
     if(value === 'DEL'){
-      if(activeTileValue === 0 ) return
-      let newValue = activeTileValue.slice(0,-1) || 0
-      setActiveTileValue( newValue )
+      if(activeTile.value === 0 ) return
+      let newValue = activeTile.value.slice(0,-1) || 0
+      setActiveTile( {...activeTile,value:newValue} )
       return
     }
-    let newValue = (activeTileValue !== 0) ? activeTileValue + `${value}` : value
-    setActiveTileValue(newValue)
+    let newValue = (activeTile.value !== 0) ? activeTile.value + `${value}` : value
+    setActiveTile({...activeTile,value: newValue})
   }
-  console.log(tiles)
   return (
     <div className="App">
       <Navigation 
         data={data} 
         unitCategory={unitCategory} 
         setUnitCategory={setUnitCategory}
+        activeTile={activeTile}
+        setActiveTile={setActiveTile}
         dispatch={dispatch}
         />
-      <div className='display'>
+      <div className='tileCon'>
         { tiles.map((tile,index)=>
             <ConverterTile 
               key={tile.id} 
@@ -121,10 +133,14 @@ function App() {
           )
         }
       </div>
-      <div className='buttons'>
+      <div className='buttonCon'>
         {
           BUTTONS['converter'].map((button,index)=>
-            <button key={index} onClick={ (e)=>{ handleButtonClick(e) } }>{button}</button>
+            {
+              if(button === '' ) return <button className='button'>{button}</button>
+              let className = (/[0-9.]/.test(button)) ? 'button button__normal' : 'button button__special'
+              return <button className={className} key={index} onClick={ (e)=>{ handleButtonClick(e) } }>{button}</button>
+            }        
           )
           }
       </div>
