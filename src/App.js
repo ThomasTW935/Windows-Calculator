@@ -52,8 +52,8 @@ function reducer(tiles,action){
     case ACTIONS.UPDATE_UNIT: 
       return tiles.map(tile=>{
         let payload = action.payload
-        if(payload.id && payload.activeTile.id !== tile.id && payload.id === tile.id) return {...tile, value: (payload.activeTile.value * action.payload.computedRate)}
-        return {...tile, unit: {name: action.payload.name, rate: action.payload.rate}}
+        if(!payload.id) return {...tile, unit: {name: action.payload.name, rate: action.payload.rate}}
+        return {...tile, value: (payload.activeTile.value * action.payload.computedRate)}
       })
     case ACTIONS.UPDATE_TILE_VALUES: 
       return tiles.map(tile=>{
@@ -73,9 +73,6 @@ function App() {
     {id: 12131232321,value:0, unit: {name: data[0].default, rate: data[0].units[data[0].default]}},
   ])
 
-  // const [activeTile, setActiveTile] = useState(tiles[0].id)
-  // const [activeTileValue, setActiveTileValue] = useState(0)
-  // const [actilveTiveRate, setActiveTileRate] = useState(tiles[0].unit.rate)
   const [activeTile, setActiveTile] = useState({ id: tiles[0].id, value: 0, rate: tiles[0].unit.rate})
 
   useEffect(()=>{
@@ -137,7 +134,7 @@ function App() {
         {
           BUTTONS['converter'].map((button,index)=>
             {
-              if(button === '' ) return <button className='button'>{button}</button>
+              if(button === '' ) return <span>{button}</span>
               let className = (/[0-9.]/.test(button)) ? 'button button__normal' : 'button button__special'
               return <button className={className} key={index} onClick={ (e)=>{ handleButtonClick(e) } }>{button}</button>
             }        

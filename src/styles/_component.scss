@@ -44,8 +44,12 @@
     background: transparent;
     &__normal{
         background: $mainButtonBg;
+        font-size: 1.5rem;
     }
     &__special{
+        font-size: .95rem;
         background: $secondaryButtonBg;
     }
+    
+    &:hover,&:active{background: $accentButtonBg}
 }
