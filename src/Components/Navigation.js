@@ -12,9 +12,10 @@ function Navigation({data, unitCategory,setUnitCategory,activeTile,setActiveTile
         let unitRate = dataset.rate
 
         setUnitCategory(target.value)
-        setActiveTile({ ...activeTile, value: 0 })
+        setActiveTile( (prevActiveTile) => {return { ...prevActiveTile, value: 0 , rate: unitRate}})
         dispatch({type: ACTIONS.UPDATE_UNIT, payload: { name: unitName, rate: unitRate }})
     }
+
     return (
         <div className='nav'>
             <div className='nav__burger'>
