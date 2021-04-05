@@ -1,4 +1,5 @@
 import React, { useState,useReducer, useEffect } from 'react';
+import Buttons from './Components/Buttons';
 import ConverterTile from './Components/ConverterTile';
 import Navigation from './Components/Navigation';
 // import './styles/main.css'
@@ -53,8 +54,22 @@ export const ACTIONS = {
   UPDATE_TILE_VALUES: 'update-tile-values',
 }
 
+const SPECIAL_BUTTONS = {
+  BLANK: '',
+  CE: 'CE',
+  C: 'C',
+  DEL: 'del',
+  DIVIDE: '/',
+  MULTIPLY: 'X',
+  SUBTRACT: '-',
+  ADD: '+',
+  EQUALS: '=',
+  PERIOD: '.'
+}
+
 const BUTTONS = {
   converter: [``, `CE`, `DEL`,7,8,9,4,5,6,1,2,3,``,0,`.`],
+  standard: ['CE','C','DEL', '/' , ]
 }
 
 function reducer(tiles,action){
@@ -99,26 +114,10 @@ function App() {
   useEffect(()=>{
     dispatch({type: ACTIONS.UPDATE_TILE_VALUES, payload: {activeTile:activeTile} })
     console.log(activeTile)
-  },[activeTile.value])
+  },[activeTile, activeTile.value])
 
 
-  function handleButtonClick(e){
-    let target = e.target
-    let value = target.innerHTML
-    if(value === 'CE'){
-      setActiveTile(prevActiveTile => {return {...prevActiveTile,value: 0}})
-      return
-    }
-    
-    if(value === 'DEL'){
-      if(activeTile.value === 0 ) return
-      let newValue = activeTile.value.slice(0,-1) || 0
-      setActiveTile(prevActiveTile => {return {...prevActiveTile,value:newValue}} )
-      return
-    }
-    let newValue = (activeTile.value !== 0) ? activeTile.value + `${value}` : value
-    setActiveTile(prevActiveTile => {return {...prevActiveTile,value: newValue}})
-  }
+  
   return (
     <div className="App">
       <Navigation 
@@ -144,17 +143,7 @@ function App() {
           )
         }
       </div>
-      <div className='buttonCon'>
-        {
-          BUTTONS['converter'].map((button,index)=>
-            {
-              if(button === '' ) return <span key={index}>{button}</span>
-              let className = (/[0-9.]/.test(button)) ? 'button button__normal' : 'button button__special'
-              return <button className={className} key={index} onClick={ (e)=>{ handleButtonClick(e) } }>{button}</button>
-            }        
-          )
-          }
-      </div>
+      <Buttons buttons={BUTTONS.converter} activeTile={activeTile} setActiveTile={setActiveTile} />
     </div>
   );
 }
