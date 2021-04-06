@@ -90,7 +90,7 @@ export default function Converter({category}) {
 
       useEffect(()=>{
         let newData = data.filter(value =>  value.category === category)
-        console.log(newData)
+        console.log('Hello from Converter.js')
         let unitName = newData[0].default
         let unitRate = newData[0].units[unitName]
         setActiveTile( (prevActiveTile) => {return { ...prevActiveTile, value: 0 , rate: unitRate}})

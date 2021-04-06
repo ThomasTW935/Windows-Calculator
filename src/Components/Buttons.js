@@ -14,7 +14,9 @@ export default function Buttons({buttons,activeTile, setActiveTile}) {
         
         if(value === DEL){
           if(activeTile.value === 0 ) return
-          let newValue = activeTile.value.slice(0,-1) || 0
+          console.log(typeof activeTile.value)
+          let value = (activeTile.value !== 'String') ? activeTile.value.toString() : activeTile.value
+          let newValue = value.slice(0,-1) || 0
           setActiveTile(prevActiveTile => {return {...prevActiveTile,value:newValue}} )
           return
         }
@@ -28,6 +30,7 @@ export default function Buttons({buttons,activeTile, setActiveTile}) {
             {
               if(button === '' ) return <span key={index}>{button}</span>
               let className = (/[0-9.]/.test(button)) ? 'button button__normal' : 'button button__special'
+              if(button === DEL) className += ` DEL`
               return <button className={className} key={index} onClick={ (e)=>{ handleButtonClick(e) } }>{button}</button>
             }        
           )

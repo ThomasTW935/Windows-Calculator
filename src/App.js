@@ -45,6 +45,7 @@ export const ACTIONS = {
 
 function App() {
   const [category, setCategory] = useState(CATEGORIES.CONVERTER[0])
+  const [type, setType] = useState('CONVERTER')
   
   return (
     <div className="App">
@@ -52,7 +53,9 @@ function App() {
         category={category} 
         setCategory={setCategory}
         />
-      <Converter category={category}/>
+
+      { (type === 'CONVERTER') && <Converter category={category}/>}
+      
       
     </div>
   );
