@@ -1,15 +1,18 @@
 import React from 'react'
+import {SPECIAL_BUTTONS} from '../App';
+
 
 export default function Buttons({buttons,activeTile, setActiveTile}) {
+  const {CE,DEL} = SPECIAL_BUTTONS
     function handleButtonClick(e){
         let target = e.target
         let value = target.innerHTML
-        if(value === 'CE'){
+        if(value === CE){
           setActiveTile(prevActiveTile => {return {...prevActiveTile,value: 0}})
           return
         }
         
-        if(value === 'DEL'){
+        if(value === DEL){
           if(activeTile.value === 0 ) return
           let newValue = activeTile.value.slice(0,-1) || 0
           setActiveTile(prevActiveTile => {return {...prevActiveTile,value:newValue}} )

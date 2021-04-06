@@ -132,7 +132,7 @@ select {
 .select {
   border: transparent;
   background-color: transparent;
-  color: #ffffff;
+  color: gray;
   text-transform: capitalize;
 }
 

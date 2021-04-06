@@ -1,10 +1,11 @@
 import React from 'react';
 import {ACTIONS} from '../App';
+import {data} from './Converter';
 
-function ConverterTile({data,unitCategory,tile,activeTile,setActiveTile,dispatch}) {
+function ConverterTile({category,tile,activeTile,setActiveTile,dispatch}) {
     let {id,value} = tile
     let {name,rate} = tile.unit
-
+    
     function handleOptionChange(e){
         let target = e.target
         let dataset = target.options[target.selectedIndex].dataset
@@ -29,7 +30,7 @@ function ConverterTile({data,unitCategory,tile,activeTile,setActiveTile,dispatch
                 {
                     data.map((item,index)=>
                         {
-                            if(item.category === unitCategory)
+                            if(item.category === category)
                                 {
                                     return Object.keys(item['units']).map((value,index)=>
                                     { 

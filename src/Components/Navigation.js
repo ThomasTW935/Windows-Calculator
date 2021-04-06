@@ -1,21 +1,21 @@
 import React from 'react';
-import { ACTIONS } from '../App';
+import {  CATEGORIES } from '../App';
 
-function Navigation({data, unitCategory,setUnitCategory,activeTile,setActiveTile, dispatch}) {
+function Navigation({category,setCategory}) {
     
-    function handleOptionChange(e){
-        let target = e.target
-        let idx = target.selectedIndex
-        let dataset =  target.options[idx].dataset
+    // function handleOptionChange(e){
+    //     let target = e.target
+    //     let idx = target.selectedIndex
+    //     let dataset =  target.options[idx].dataset
 
-        let unitName = dataset.default
-        let unitRate = dataset.rate
+    //     let unitName = dataset.default
+    //     let unitRate = dataset.rate
 
-        setUnitCategory(target.value)
-        setActiveTile( (prevActiveTile) => {return { ...prevActiveTile, value: 0 , rate: unitRate}})
-        dispatch({type: ACTIONS.UPDATE_UNIT, payload: { name: unitName, rate: unitRate }})
-    }
-
+    //     setUnitCategory(target.value)
+    //     setActiveTile( (prevActiveTile) => {return { ...prevActiveTile, value: 0 , rate: unitRate}})
+    //     dispatch({type: ACTIONS.UPDATE_UNIT, payload: { name: unitName, rate: unitRate }})
+    // }
+    
     return (
         <div className='nav'>
             <div className='nav__burger'>
@@ -23,14 +23,22 @@ function Navigation({data, unitCategory,setUnitCategory,activeTile,setActiveTile
                 <div></div>
                 <div></div>
             </div>
-            <select className='select' value={unitCategory} onChange={ (e)=>{ handleOptionChange(e) } }>
+            <select className='select' value={category} onChange={ (e)=>{ setCategory(e.target.value) } }>
                 {
-                    data.map(item=>
-                        <option key={item.id} data-default={item.default} data-rate={item.units[item.default]} >{item.category}</option> 
-                    )
+                    Object.entries(CATEGORIES).map(([key,values],index)=>{
+                        return <optgroup key={index} label={key}>
+                            {values.map((value,index)=>{
+                                return <option key={index}>{value}</option>
+                            })}
+                        </optgroup>
+                    })
+
+                    // data.map(item=>
+                    //     <option key={item.id} data-default={item.default} data-rate={item.units[item.default]} >{item.category}</option> 
+                    // )
                 }
             </select>      
-            <h3 className='nav__title'>{unitCategory}</h3>
+            <h3 className='nav__title'>{category}</h3>
             
         </div>
     );

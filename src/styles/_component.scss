@@ -32,7 +32,7 @@
 .select{
     border: transparent;
     background-color: transparent;
-    color: $mainTextColor;
+    color: hsl(0, 0%, 50%);
     text-transform: capitalize;
     option{background: inherit;}
 }
