@@ -1,20 +1,14 @@
 import React from 'react';
 import {  CATEGORIES } from '../App';
 
-function Navigation({category,setCategory}) {
+function Navigation({category,setCategory, setType}) {
     
-    // function handleOptionChange(e){
-    //     let target = e.target
-    //     let idx = target.selectedIndex
-    //     let dataset =  target.options[idx].dataset
-
-    //     let unitName = dataset.default
-    //     let unitRate = dataset.rate
-
-    //     setUnitCategory(target.value)
-    //     setActiveTile( (prevActiveTile) => {return { ...prevActiveTile, value: 0 , rate: unitRate}})
-    //     dispatch({type: ACTIONS.UPDATE_UNIT, payload: { name: unitName, rate: unitRate }})
-    // }
+    function handleRadioChange(e){
+        let target = e.target
+        console.log(target)
+        setCategory(target.value)
+        setType(target.dataset.type)
+    }
     
     return (
         <div className='nav'>
@@ -23,21 +17,25 @@ function Navigation({category,setCategory}) {
                 <div></div>
                 <div></div>
             </div>
-            <select className='select' value={category} onChange={ (e)=>{ setCategory(e.target.value) } }>
+            <form>
                 {
                     Object.entries(CATEGORIES).map(([key,values],index)=>{
-                        return <optgroup key={index} label={key}>
-                            {values.map((value,index)=>{
-                                return <option key={index}>{value}</option>
+                        return <div key={index}>
+                            <label key={index} className='category'>{key}</label>
+                                {values.map((value,i)=>{
+                                    return <label key={i}>
+                                        <input 
+                                            type='radio' 
+                                            name='category' 
+                                            value={value} 
+                                            checked={(value === category)}
+                                            data-type={key}
+                                            onChange={ (e)=> handleRadioChange(e) } />{value}</label>
                             })}
-                        </optgroup>
+                        </div>
                     })
-
-                    // data.map(item=>
-                    //     <option key={item.id} data-default={item.default} data-rate={item.units[item.default]} >{item.category}</option> 
-                    // )
                 }
-            </select>      
+            </form>      
             <h3 className='nav__title'>{category}</h3>
             
         </div>
