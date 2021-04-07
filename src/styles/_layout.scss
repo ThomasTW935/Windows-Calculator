@@ -14,6 +14,46 @@
     justify-content:space-between;
     padding: .5em;
 }
+.nav{
+    position:relative;
+    &__burger{
+        $size: 2.5rem;
+        width: $size;
+        height: $size;
+        display:flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items:center;
+        gap: 10%;
+        &:hover,&:active{
+            background: $secondaryTextColor;
+        }
+        div{
+            width: 50%;
+            height: 3%;
+            background: $mainTextColor;
+        }
+    }
+    &__list{
+        position:fixed;
+        left: 0;
+        top: 0;
+        background: $navBg;
+        width: 80%;
+        height: 100vh;
+        div{
+            display:flex;
+            flex-direction:column;
+        }
+        span{
+            font-weight: bold;
+            text-transform: capitalize;
+            padding: .5em;
+        }
+        label{padding: .5em 1.5em;}
+        input{display:none;}
+    }
+}
 .tileCon{
     display:grid;
     grid-template-columns: repeat(1,1fr);

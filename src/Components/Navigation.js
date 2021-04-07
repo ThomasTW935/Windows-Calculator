@@ -17,11 +17,11 @@ function Navigation({category,setCategory, setType}) {
                 <div></div>
                 <div></div>
             </div>
-            <form>
+            <form className='nav__list'>
                 {
                     Object.entries(CATEGORIES).map(([key,values],index)=>{
                         return <div key={index}>
-                            <label key={index} className='category'>{key}</label>
+                            <span className='category'>{key.toLowerCase()}</span>
                                 {values.map((value,i)=>{
                                     return <label key={i}>
                                         <input 
