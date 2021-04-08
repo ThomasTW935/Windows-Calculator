@@ -5,7 +5,6 @@ function Navigation({category,setCategory, setType}) {
     
     function handleRadioChange(e){
         let target = e.target
-        console.log(target)
         setCategory(target.value)
         setType(target.dataset.type)
         setShowNav( prev=>{ return !prev } )

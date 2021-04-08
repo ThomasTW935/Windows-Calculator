@@ -1,10 +1,10 @@
 import React from 'react'
 
 
-export default function Buttons({buttons, action}) {
+export default function Buttons({buttons, action, name = ''}) {
  
     return (
-        <div className='buttonCon'>
+        <div className={`buttonCon buttonCon__${name}`}>
         {
           buttons.map((button,index)=>
             {

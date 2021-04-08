@@ -252,9 +252,18 @@ select {
   height: 50%;
   display: -ms-grid;
   display: grid;
+  gap: 3px;
+}
+
+.buttonCon__converter {
   -ms-grid-rows: (1fr)[5];
   -ms-grid-columns: (1fr)[3];
       grid-template: repeat(5, 1fr)/repeat(3, 1fr);
-  gap: 3px;
+}
+
+.buttonCon__calculator {
+  -ms-grid-rows: (1fr)[5];
+  -ms-grid-columns: (1fr)[4];
+      grid-template: repeat(5, 1fr)/repeat(4, 1fr);
 }
 /*# sourceMappingURL=main.css.map */

@@ -134,7 +134,7 @@ export default function Converter({category}) {
                   )
               }
           </div>
-          <Buttons buttons={BUTTONS.CONVERTER} action={handleButtonClick} />
+          <Buttons buttons={BUTTONS.CONVERTER} action={handleButtonClick} name='converter' />
       </>
   )
 }
