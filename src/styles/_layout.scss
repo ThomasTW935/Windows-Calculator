@@ -13,9 +13,13 @@
     flex-direction:column;
     justify-content:space-between;
     padding: .5em;
+    overflow:hidden;
 }
 .nav{
     position:relative;
+    display:flex;
+    align-items:Center;
+    gap: .5em;
     &__burger{
         $size: 2.5rem;
         width: $size;
@@ -25,6 +29,8 @@
         justify-content: center;
         align-items:center;
         gap: 10%;
+        position:relative;
+        z-index: 100;
         &:hover,&:active{
             background: $secondaryTextColor;
         }
@@ -40,7 +46,9 @@
         top: 0;
         background: $navBg;
         width: 80%;
-        height: 100vh;
+        height: 100%;
+        padding: 4em .5em;
+        transition: .3s ease-in-out;
         div{
             display:flex;
             flex-direction:column;
@@ -50,8 +58,18 @@
             text-transform: capitalize;
             padding: .5em;
         }
-        label{padding: .5em 1.5em;}
+        label{
+            padding: .5em 0;
+            &:hover,&:active{
+                background: $secondaryTextColor;
+            }
+        }
         input{display:none;}
+    }
+    .hidden{
+        transform: translateX(-100%);
+        visibility: hidden;
+        opacity: 0;
     }
 }
 .tileCon{
