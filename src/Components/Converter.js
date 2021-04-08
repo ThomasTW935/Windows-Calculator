@@ -1,5 +1,5 @@
 import React, {useReducer, useEffect,useState} from 'react'
-import { ACTIONS, BUTTONS } from '../App';
+import { ACTIONS, BUTTONS, SPECIAL_BUTTONS } from '../App';
 import ConverterTile from './ConverterTile';
 import Buttons from './Buttons'
 
@@ -75,44 +75,66 @@ function reducer(tiles,action){
     }
 }
 
+
+
 export default function Converter({category}) {
+  const {CE,DEL} = SPECIAL_BUTTONS
+  const [tiles, dispatch] = useReducer(reducer,[
+      {id: 1,value:0, unit: {name: data[0].default, rate: data[0].units[data[0].default]}},
+      {id: 2,value:0, unit: {name: data[0].default, rate: data[0].units[data[0].default]}},
+      {id: 3,value:0, unit: {name: data[0].default, rate: data[0].units[data[0].default]}},
+  ])
+  const handleButtonClick = (e)=>{
+    let target = e.target
+    let value = target.innerHTML
+    if(value === CE){
+      setActiveTile(prevActiveTile => {return {...prevActiveTile,value: 0}})
+      return
+    }
     
-    const [tiles, dispatch] = useReducer(reducer,[
-        {id: 1,value:0, unit: {name: data[0].default, rate: data[0].units[data[0].default]}},
-        {id: 2,value:0, unit: {name: data[0].default, rate: data[0].units[data[0].default]}},
-        {id: 3,value:0, unit: {name: data[0].default, rate: data[0].units[data[0].default]}},
-      ])
-      const [activeTile, setActiveTile] = useState({ id: tiles[0].id, value: 0, rate: tiles[0].unit.rate})
-    
-      useEffect(()=>{
-        dispatch({type: ACTIONS.UPDATE_TILE_VALUES, payload: {activeTile:activeTile} })
-      },[activeTile, activeTile.value])
+    if(value === DEL){
+      if(activeTile.value === 0 ) return
+      console.log(typeof activeTile.value)
+      let value = (activeTile.value !== 'String') ? activeTile.value.toString() : activeTile.value
+      let newValue = value.slice(0,-1) || 0
+      setActiveTile(prevActiveTile => {return {...prevActiveTile,value:newValue}} )
+      return
+    }
+    let newValue = (activeTile.value !== 0) ? activeTile.value + `${value}` : value
+    setActiveTile(prevActiveTile => {return {...prevActiveTile,value: newValue}})
+  }
 
-      useEffect(()=>{
-        let newData = data.filter(value =>  value.category === category)
-        let unitName = newData[0].default
-        let unitRate = newData[0].units[unitName]
-        setActiveTile( (prevActiveTile) => {return { ...prevActiveTile, value: 0 , rate: unitRate}})
-        dispatch({type: ACTIONS.UPDATE_UNIT, payload: { name: unitName, rate: unitRate }})
-      }, [category])
+  const [activeTile, setActiveTile] = useState({ id: tiles[0].id, value: 0, rate: tiles[0].unit.rate})
+  
+  useEffect(()=>{
+    dispatch({type: ACTIONS.UPDATE_TILE_VALUES, payload: {activeTile:activeTile} })
+  },[activeTile, activeTile.value])
 
-    return (
-        <>
-            <div className='tileCon'>
-                { tiles.map((tile,index)=>
-                    <ConverterTile 
-                    key={tile.id} 
-                    category={category} 
-                    tile={tile}
-                    tiles={tiles}
-                    activeTile={activeTile}
-                    setActiveTile={setActiveTile}
-                    dispatch={dispatch}
-                    />
-                    )
-                }
-            </div>
-            <Buttons buttons={BUTTONS.converter} activeTile={activeTile} setActiveTile={setActiveTile} />
-        </>
-    )
+  useEffect(()=>{
+    let newData = data.filter(value =>  value.category === category)
+    let unitName = newData[0].default
+    let unitRate = newData[0].units[unitName]
+    setActiveTile( (prevActiveTile) => {return { ...prevActiveTile, value: 0 , rate: unitRate}})
+    dispatch({type: ACTIONS.UPDATE_UNIT, payload: { name: unitName, rate: unitRate }})
+  }, [category])
+
+  return (
+      <>
+          <div className='tileCon'>
+              { tiles.map((tile,index)=>
+                  <ConverterTile 
+                  key={tile.id} 
+                  category={category} 
+                  tile={tile}
+                  tiles={tiles}
+                  activeTile={activeTile}
+                  setActiveTile={setActiveTile}
+                  dispatch={dispatch}
+                  />
+                  )
+              }
+          </div>
+          <Buttons buttons={BUTTONS.CONVERTER} action={handleButtonClick} />
+      </>
+  )
 }

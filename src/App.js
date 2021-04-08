@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Calculator from './Components/Calculator';
 import Converter from './Components/Converter';
 import Navigation from './Components/Navigation';
 // import './styles/main.css'
@@ -27,8 +28,8 @@ const {BLANK,CE,C,DEL,DIVIDE,MULTIPLY,SUBTRACT,ADD,EQUALS,PERIOD} = SPECIAL_BUTT
 
 
 export const BUTTONS = {
-  converter: [BLANK,CE,DEL,7,8,9,4,5,6,1,2,3,BLANK,0,PERIOD],
-  standard: ['CE','C','DEL', '/' , ]
+  CONVERTER: [BLANK,CE,DEL,7,8,9,4,5,6,1,2,3,BLANK,0,PERIOD],
+  STANDARD: [CE,C,DEL, DIVIDE, 7,8,9, MULTIPLY, 4,5,6, SUBTRACT, 1,2,3, ADD, BLANK, 0, PERIOD, EQUALS , ]
 }
 
 export const ACTIONS = {
@@ -56,6 +57,7 @@ function App() {
         />
 
       { (type === 'CONVERTER') && <Converter category={category}/>}
+      { (type === 'CALCULATOR') && <Calculator category={category}/>}
       
       
     </div>
