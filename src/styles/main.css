@@ -82,16 +82,20 @@ select {
   }
 }
 
-.converterTile {
+.tile {
   padding: 1em 0;
 }
 
-.converterTile p {
+.tile p {
   font-size: 2rem;
 }
 
-.converterTile .fontBold {
+.tile .fontBold {
   font-weight: bold;
+}
+
+.tile .equation {
+  font-size: .8rem;
 }
 
 .select {

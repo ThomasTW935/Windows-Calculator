@@ -1,9 +1,10 @@
 import React from 'react'
 
-export default function CalculatorTile({value}) {
+export default function CalculatorTile({value,equation}) {
     return (
-        <div className='calculatorTile'>
-            <input value={value}/>
+        <div className='tile'>
+            <p className='equation'>{equation}</p>
+            <p>{value}</p>
         </div>
     )
 }

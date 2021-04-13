@@ -1,5 +1,5 @@
 import React, {useReducer, useEffect,useState} from 'react'
-import { ACTIONS, BUTTONS, SPECIAL_BUTTONS } from '../App';
+import { ACTIONS, BUTTONS, SPECIAL_BUTTONS, buttonClickReturnValue } from '../App';
 import ConverterTile from './ConverterTile';
 import Buttons from './Buttons'
 
@@ -87,20 +87,21 @@ export default function Converter({category}) {
   const handleButtonClick = (e)=>{
     let target = e.target
     let value = target.innerHTML
-    if(value === CE){
-      setActiveTile(prevActiveTile => {return {...prevActiveTile,value: 0}})
-      return
-    }
+    // if(value === CE){
+    //   setActiveTile(prevActiveTile => {return {...prevActiveTile,value: 0}})
+    //   return
+    // }
     
-    if(value === DEL){
-      if(activeTile.value === 0 ) return
-      console.log(typeof activeTile.value)
-      let value = (activeTile.value !== 'String') ? activeTile.value.toString() : activeTile.value
-      let newValue = value.slice(0,-1) || 0
-      setActiveTile(prevActiveTile => {return {...prevActiveTile,value:newValue}} )
-      return
-    }
-    let newValue = (activeTile.value !== 0) ? activeTile.value + `${value}` : value
+    // if(value === DEL){
+    //   if(activeTile.value === 0 ) return
+    //   console.log(typeof activeTile.value)
+    //   let value = (activeTile.value !== 'String') ? activeTile.value.toString() : activeTile.value
+    //   let newValue = value.slice(0,-1) || 0
+    //   setActiveTile(prevActiveTile => {return {...prevActiveTile,value:newValue}} )
+    //   return
+    // }
+    // let newValue = (activeTile.value !== 0) ? activeTile.value + `${value}` : value
+    let newValue = buttonClickReturnValue(value, activeTile.value)
     setActiveTile(prevActiveTile => {return {...prevActiveTile,value: newValue}})
   }
 

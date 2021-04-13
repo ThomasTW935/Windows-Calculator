@@ -41,12 +41,25 @@ export const ACTIONS = {
 }
 
 
-
+export const buttonClickReturnValue = (button, value=0)=>{
+  let newValue;
+  if(button === CE) return 0
+  if(button === DEL){
+    if(value === 0 ) return 0
+    let reformatValue = (typeof value !== 'String') ? value.toString() : value
+    let newValue = reformatValue.slice(0,-1) || 0
+    return newValue
+  }
+  let regex = /[0-9.]/
+  if(!regex.test(button)) return 0
+  newValue = (value !== 0) ? value + `${button}` : button
+  return newValue
+}
 
 
 function App() {
-  const [category, setCategory] = useState(CATEGORIES.CONVERTER[0])
-  const [type, setType] = useState('CONVERTER')
+  const [category, setCategory] = useState(CATEGORIES.CALCULATOR[0])
+  const [type, setType] = useState('CALCULATOR')
  
   return (
     <div className="App">

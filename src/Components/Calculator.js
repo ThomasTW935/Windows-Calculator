@@ -1,21 +1,50 @@
 import React, {useState} from 'react'
 import Buttons from './Buttons'
 import CalculatorTile from './CalculatorTile'
-import {ACTIONS, SPECIAL_BUTTONS, BUTTONS} from '../App';
+import {ACTIONS, SPECIAL_BUTTONS, BUTTONS, buttonClickReturnValue} from '../App';
 
 export default function Calculator({category}) {
-    const calculate = (value)=>{
+    const [tile, setTile] = useState(0)
+    const [equation, setEquation] = useState(0)
 
+    const {CE,EQUALS, MULTIPLY} = SPECIAL_BUTTONS
+
+    const handleButtonClick = (e)=>{
+        let target = e.target
+        let button = target.innerHTML
+        let newValue = buttonClickReturnValue(button, tile)
+        setTile( newValue )
+        let regex = /[0-9.]/
+        if(regex.test(button)) return
+
+        if(button === CE) return setEquation('')
+
+        if(button === EQUALS){
+            setEquation(prevEquation => {return  equation + tile })
+            setTile(calculate(button, equation,tile))
+            setEquation('')
+            return 
+        }
+        setEquation( prevEquation => {return (prevEquation !==0) ? prevEquation + tile + button : tile + button } )
+        // let result = calculate(button,equation)
+        // console.log(result)
     }
+    const calculate = (button,prevEquation,tile)=>{
+        let equation = (prevEquation.indexOf(MULTIPLY) !== -1) ? prevEquation.replace(MULTIPLY, '*') + tile : prevEquation + tile
+        let result = eval(equation)
+        console.log(equation)
+        console.log(tile)
+        return result
+    }
+    console.log(equation)
 
-
+    
+    
     let buttons = Object.entries(BUTTONS).filter(([key,value],index)=>{return key === category.toUpperCase()})
-
-    const [value, setValue] = useState(0)
     return (
         <>
-            <CalculatorTile value={value}/>
-            <Buttons buttons={buttons[0][1]} action={calculate} name='calculator'/>  
+            <CalculatorTile value={tile} equation={equation}/>
+            <Buttons buttons={buttons[0][1]} action={handleButtonClick} name='calculator'/>  
         </>
     )
 }

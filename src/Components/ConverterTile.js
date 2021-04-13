@@ -21,7 +21,7 @@ function ConverterTile({category,tile,activeTile,setActiveTile,dispatch}) {
         // dispatch({type: ACTIONS.UPDATE_UNIT, payload: {id: id,name:name, rate: rate, activeTile: activeTile, computedRate: rate/activeTile.rate}})
     }
     return (
-        <div className='converterTile'>
+        <div className='tile'>
             <p
                 className={ (activeTile.id === id) ? `fontBold` : ``} 
                 onClick={  (e) => handleClickEvent(e)  }
