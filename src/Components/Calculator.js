@@ -35,8 +35,7 @@ export default function Calculator({category}) {
         console.log(tile)
         return result
     }
-    let test = '2X3+5X3'
-    console.log(test.replaceAll('X', '*'))
+    console.log(equation)
 
     
     
