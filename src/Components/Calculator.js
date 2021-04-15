@@ -7,7 +7,7 @@ export default function Calculator({category}) {
     const [tile, setTile] = useState(0)
     const [equation, setEquation] = useState(0)
 
-    const {CE,EQUALS, MULTIPLY} = SPECIAL_BUTTONS
+    const {C,CE,EQUALS, MULTIPLY,DEL} = SPECIAL_BUTTONS
 
     const handleButtonClick = (e)=>{
         let target = e.target
@@ -15,9 +15,8 @@ export default function Calculator({category}) {
         let newValue = buttonClickReturnValue(button, tile)
         setTile( newValue )
         let regex = /[0-9.]/
-        if(regex.test(button)) return
-
-        if(button === CE) return setEquation('')
+        if(regex.test(button) || button === DEL) return
+        if(button === CE || button === C) return setEquation('')
 
         if(button === EQUALS){
             setEquation(prevEquation => {return  equation + tile })
@@ -30,13 +29,14 @@ export default function Calculator({category}) {
         // console.log(result)
     }
     const calculate = (button,prevEquation,tile)=>{
-        let equation = (prevEquation.indexOf(MULTIPLY) !== -1) ? prevEquation.replace(MULTIPLY, '*') + tile : prevEquation + tile
+        let equation = (prevEquation.indexOf(MULTIPLY) !== -1) ? prevEquation.replaceAll(MULTIPLY, '*') + tile : prevEquation + tile
         let result = eval(equation)
         console.log(equation)
         console.log(tile)
         return result
     }
-    console.log(equation)
+    let test = '2X3+5X3'
+    console.log(test.replaceAll('X', '*'))
 
     
     
