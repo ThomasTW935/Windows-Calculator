@@ -1,11 +1,11 @@
 import React, {useState} from 'react'
 import Buttons from './Buttons'
 import CalculatorTile from './CalculatorTile'
-import {ACTIONS, SPECIAL_BUTTONS, BUTTONS, buttonClickReturnValue} from '../App';
+import { SPECIAL_BUTTONS, BUTTONS, buttonClickReturnValue} from '../App';
 
 export default function Calculator({category}) {
     const [tile, setTile] = useState(0)
-    const [equation, setEquation] = useState(0)
+    const [equation, setEquation] = useState('')
 
     const {C,CE,EQUALS, MULTIPLY,DEL} = SPECIAL_BUTTONS
 
@@ -25,17 +25,15 @@ export default function Calculator({category}) {
             return 
         }
         setEquation( prevEquation => {return (prevEquation !==0) ? prevEquation + tile + button : tile + button } )
-        // let result = calculate(button,equation)
-        // console.log(result)
+        let result = calculate(button,equation,tile)
+        console.log(equation.match(/[+|X|\-|*|/]/g))
+        setTile(result)
     }
     const calculate = (button,prevEquation,tile)=>{
         let equation = (prevEquation.indexOf(MULTIPLY) !== -1) ? prevEquation.replaceAll(MULTIPLY, '*') + tile : prevEquation + tile
         let result = eval(equation)
-        console.log(equation)
-        console.log(tile)
         return result
     }
-    console.log(equation)
 
     
     
