@@ -1,22 +1,25 @@
 import React, { useState } from 'react';
+import { useEffect } from 'react';
 import Calculator from './Components/Calculator';
 import Converter from './Components/Converter';
 import Navigation from './Components/Navigation';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faBackspace, faDivide, faTimes} from '@fortawesome/free-solid-svg-icons'
 // import './styles/main.css'
 
 
 export const CATEGORIES = {
   CALCULATOR:['Standard', 'Scientific', 'Programmer', 'Date Calculation'],
-  CONVERTER:['Weight', 'Length', 'Volume'],
+  CONVERTER:['Weight', 'Length', 'Volume','Currency'],
 }
 
 export const SPECIAL_BUTTONS = {
   BLANK: '',
   CE: 'CE',
   C: 'C',
-  DEL: 'del',
-  DIVIDE: '/',
-  MULTIPLY: 'X',
+  DEL: <FontAwesomeIcon icon={faBackspace}/>,
+  DIVIDE: <FontAwesomeIcon icon={faDivide}/>,
+  MULTIPLY: <FontAwesomeIcon icon={faTimes}/>,
   SUBTRACT: '-',
   ADD: '+',
   EQUALS: '=',
@@ -38,6 +41,7 @@ export const ACTIONS = {
   RESET_NUM: 'reset-num',
   UPDATE_UNIT: 'update-unit',
   UPDATE_TILE_VALUES: 'update-tile-values',
+  UPDATE_ACTIVE_VALUE: 'update-active-value',
 }
 
 
@@ -58,9 +62,10 @@ export const buttonClickReturnValue = (button, value=0)=>{
 
 
 function App() {
-  const [category, setCategory] = useState(CATEGORIES.CALCULATOR[0])
-  const [type, setType] = useState('CALCULATOR')
- 
+  const [category, setCategory] = useState(CATEGORIES.CONVERTER[0])
+  const [type, setType] = useState('CONVERTER')
+
+
   return (
     <div className="App">
       <Navigation 
@@ -71,7 +76,7 @@ function App() {
 
       { (type === 'CONVERTER') && <Converter category={category}/>}
       { (type === 'CALCULATOR') && <Calculator category={category}/>}
-      
+
       
     </div>
   );

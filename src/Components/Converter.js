@@ -1,7 +1,8 @@
-import React, {useReducer, useEffect,useState} from 'react'
-import { ACTIONS, BUTTONS, SPECIAL_BUTTONS, buttonClickReturnValue } from '../App';
+import React, {useReducer, useEffect,useState,useRef} from 'react'
+import { ACTIONS, BUTTONS, SPECIAL_BUTTONS,  } from '../App';
 import ConverterTile from './ConverterTile';
 import Buttons from './Buttons'
+import axios from 'axios'
 
 export const data = [
     {
@@ -47,6 +48,11 @@ export const data = [
 
 function reducer(tiles,action){
     switch(action.type){
+      case ACTIONS.UPDATE_ACTIVE_VALUE:
+        return tiles.map(tile=>{
+          if(tile.ref !== action.payload.activeTile) return tile
+          return {...tile, value: action.payload.value}
+        })
       case ACTIONS.UPDATE_UNIT: 
       return tiles.map(tile=>{
         let payload = action.payload
@@ -79,46 +85,51 @@ function reducer(tiles,action){
 
 export default function Converter({category}) {
   const {CE,DEL} = SPECIAL_BUTTONS
+  const upperTileRef = useRef()
+  const lowerTileRef = useRef()
   const [tiles, dispatch] = useReducer(reducer,[
-      {id: 1,value:0, unit: {name: data[0].default, rate: data[0].units[data[0].default]}},
-      {id: 2,value:0, unit: {name: data[0].default, rate: data[0].units[data[0].default]}},
-      {id: 3,value:0, unit: {name: data[0].default, rate: data[0].units[data[0].default]}},
+      {id: 1,ref: upperTileRef,value:0, unit: {name: data[0].default, rate: data[0].units[data[0].default]}},
+      {id: 2,ref: lowerTileRef,value:0, unit: {name: data[0].default, rate: data[0].units[data[0].default]}},
   ])
-  const handleButtonClick = (e)=>{
-    let target = e.target
-    let value = target.innerHTML
-    // if(value === CE){
-    //   setActiveTile(prevActiveTile => {return {...prevActiveTile,value: 0}})
-    //   return
-    // }
-    
-    // if(value === DEL){
-    //   if(activeTile.value === 0 ) return
-    //   console.log(typeof activeTile.value)
-    //   let value = (activeTile.value !== 'String') ? activeTile.value.toString() : activeTile.value
-    //   let newValue = value.slice(0,-1) || 0
-    //   setActiveTile(prevActiveTile => {return {...prevActiveTile,value:newValue}} )
-    //   return
-    // }
-    // let newValue = (activeTile.value !== 0) ? activeTile.value + `${value}` : value
-    let newValue = buttonClickReturnValue(value, activeTile.value)
-    setActiveTile(prevActiveTile => {return {...prevActiveTile,value: newValue}})
-  }
+  const [activeTile, setActiveTile] = useState(upperTileRef)
+  const [activeValue, setActiveValue] = useState(0)
 
-  const [activeTile, setActiveTile] = useState({ id: tiles[0].id, value: 0, rate: tiles[0].unit.rate})
+  
+
   
   useEffect(()=>{
-    dispatch({type: ACTIONS.UPDATE_TILE_VALUES, payload: {activeTile:activeTile} })
-  },[activeTile, activeTile.value])
+    setActiveValue(activeTile.current.value)
+  },[activeTile])
+  useEffect(()=>{
+    dispatch({type: ACTIONS.UPDATE_ACTIVE_VALUE, payload: {value:activeValue, activeTile: activeTile}})
+  },[activeValue])
 
   useEffect(()=>{
     let newData = data.filter(value =>  value.category === category)
+    console.log(category)
+    console.log(data)
     let unitName = newData[0].default
     let unitRate = newData[0].units[unitName]
     setActiveTile( (prevActiveTile) => {return { ...prevActiveTile, value: 0 , rate: unitRate}})
     dispatch({type: ACTIONS.UPDATE_UNIT, payload: { name: unitName, rate: unitRate }})
   }, [category])
 
+  useEffect(()=>{
+    const apiUrl = "https://api.ratesapi.io/api/latest"
+    let newItem = {}
+    axios.get(apiUrl).then(res=>{
+      newItem = {
+        id:4,
+        category: 'Currency',
+        default: res.data.base,
+        units: {...res.data.rates, EUR:1}
+      }
+      data.push(newItem)
+      console.log(data)
+    }).catch(err=>{
+      console.log(`Error Here: ${err}`)
+    })
+  }, [])
   return (
       <>
           <div className='tileCon'>
@@ -135,7 +146,11 @@ export default function Converter({category}) {
                   )
               }
           </div>
-          <Buttons buttons={BUTTONS.CONVERTER} action={handleButtonClick} name='converter' />
+          <Buttons 
+            buttons={BUTTONS.CONVERTER} 
+            currentValue={activeValue} 
+            setCurrentValue={setActiveValue} 
+            name='converter' />
       </>
   )
 }
