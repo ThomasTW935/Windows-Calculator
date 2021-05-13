@@ -33,8 +33,8 @@ const {zero,one,two,three,four,five,six,seven,eight,nine} = NORMAL_BUTTONS
 
 export const buttonClickReturnValue = (button, value=0)=>{
   let newValue;
-  if(button === CE) return 0
-  if(button === DEL){
+  if(button === CE.value) return 0
+  if(button === DEL.value){
     if(value === 0 ) return 0
     let reformatValue = (typeof value !== 'String') ? value.toString() : value
     let newValue = reformatValue.slice(0,-1) || 0

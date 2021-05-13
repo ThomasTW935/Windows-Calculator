@@ -27,8 +27,9 @@ function ConverterTile({category,tile,dispatch}) {
                 style={{fontWeight:tile.active ? 'bold' : ''} }  
                 onClick={ () => handleTileClick(tile.id) }
                 autoFocus={ tile.active }
+                readOnly
                 />
-            <select className='select' value={name} >
+            <select className='select' value={name} onChange={ (e)=>{handleOptionChange(e)} }>
                 {
                     data.map((item,index)=>
                         {

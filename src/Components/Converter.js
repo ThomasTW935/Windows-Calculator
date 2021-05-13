@@ -54,7 +54,7 @@ function reducer(tiles,{type,payload}){
         })
       case ACTIONS.UPDATE_ACTIVE_VALUE:
         return tiles.map(tile=>{
-          if(tile.ref !== payload.activeTile) return {...tile}
+          if(!tile.active) return tile
           return {...tile, value: payload.value}
         })
       case ACTIONS.UPDATE_UNIT: 
