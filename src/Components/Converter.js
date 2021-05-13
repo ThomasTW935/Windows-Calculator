@@ -57,21 +57,16 @@ function reducer(tiles,{type,payload}){
           if(!tile.active) return tile
           return {...tile, value: payload.value}
         })
-      case ACTIONS.UPDATE_UNIT: 
-      return tiles.map(tile=>{
-        let newUnit = {name: payload.name, rate: payload.rate}
-        
-        if(!payload.id) return {...tile, unit: newUnit }
-  
-        if(tile.id === payload.id && payload.id === payload.activeTile.id) return { ...tile , unit: newUnit}
-        
-        let newValue = payload.activeTile.value * (payload.rate / payload.activeTile.rate)
-        if(tile.id === payload.id && tile.id !== payload.activeTile.id) return {...tile,value: newValue , unit: newUnit}
-        
-        newValue = payload.activeTile.value * (tile.unit.rate / payload.rate)
-        if(tile.id !== payload.id && payload.id === payload.activeTile.id) return {...tile, value: newValue }
-        
-        return tile
+      case ACTIONS.UPDATE_UNIT:
+        return tiles.map(tile=>{
+          if(tile.id !== payload.id) return tile
+          return { ...tile, unit: { name: payload.name, rate: payload.rate } }
+        })
+      case ACTIONS.UPDATE_INACTIVE_TILE_VALUE:
+        return tiles.map(tile=>{
+          if(tile.active) return tile
+          let activeTile =  tiles.filter(tile=> tile.active)[0]
+          return {...tile, value: (Number(activeTile.value) / activeTile.unit.rate) * tile.unit.rate}
         })
       case ACTIONS.UPDATE_TILE_VALUES: 
         return tiles.map(tile=>{
@@ -98,6 +93,7 @@ export default function Converter({category}) {
 
   useEffect(()=>{
     dispatch({type: ACTIONS.UPDATE_ACTIVE_VALUE, payload: {value:inputValue}})
+    dispatch({ type: ACTIONS.UPDATE_INACTIVE_TILE_VALUE, payload: {} })
   },[inputValue])
 
   useEffect(()=>{

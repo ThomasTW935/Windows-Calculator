@@ -20,6 +20,7 @@ export const ACTIONS = {
   UPDATE_TILE_VALUES: 'update-tile-values',
   UPDATE_ACTIVE_VALUE: 'update-active-value',
   UPDATE_ACTIVE_TILE: 'update-active-tile',
+  UPDATE_INACTIVE_TILE_VALUE: 'update-inactive-tile-value',
 }
 
 function App() {

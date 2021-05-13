@@ -7,17 +7,14 @@ function ConverterTile({category,tile,dispatch}) {
     let {id,value} = tile
     let {name,rate} = tile.unit
     function handleOptionChange(e){
-        // let target = e.target
-        // let dataset = target.options[target.selectedIndex].dataset
-        // let {name,rate} = dataset
-
-        // if(id === activeTile.id) setActiveTile({...activeTile, rate: rate}); console.log('im here')
-        
-        // dispatch({type: ACTIONS.UPDATE_UNIT, payload: {id: id,name:name, rate: rate, activeTile: activeTile, computedRate: rate/activeTile.rate}})
+        let target = e.target
+        let dataset = target.options[target.selectedIndex].dataset
+        let {name,rate} = dataset
+        dispatch({type: ACTIONS.UPDATE_UNIT, payload: {id: id,name:name, rate: rate}})
+        if(!tile.active) dispatch({ type: ACTIONS.UPDATE_INACTIVE_TILE_VALUE, payload:{} })
     }
     function handleTileClick(id){
         dispatch({type: ACTIONS.UPDATE_ACTIVE_TILE, payload:{ id: id }})
-        // dispatch({type: ACTIONS.UPDATE_UNIT, payload: {id: id,name:name, rate: rate, activeTile: activeTile, computedRate: rate/activeTile.rate}})
     }
     return (
         <div className='tilee'>
