@@ -1,8 +1,12 @@
 
 .tile{
     padding:1em 0;
-    p{
+    input{
         font-size: 2rem;
+        background: none;
+        color: white;
+        outline: none;
+        border: none;
     }
     .fontBold{
         font-weight: bold;

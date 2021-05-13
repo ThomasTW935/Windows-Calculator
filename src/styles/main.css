@@ -86,8 +86,12 @@ select {
   padding: 1em 0;
 }
 
-.tile p {
+.tile input {
   font-size: 2rem;
+  background: none;
+  color: white;
+  outline: none;
+  border: none;
 }
 
 .tile .fontBold {
