@@ -3,7 +3,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faBackspace, faDivide, faTimes} from '@fortawesome/free-solid-svg-icons'
 
 
-const SPECIAL_BUTTONS = {
+export const SPECIAL_BUTTONS = {
   BLANK: {label: '', value: ''},
   CE: {label:'CE', value: 'clear-entry'},
   C: {label:'C', value: 'clear'},
@@ -31,6 +31,21 @@ const NORMAL_BUTTONS = {
 const {BLANK,CE,C,DEL,DIVIDE,MULTIPLY,SUBTRACT,ADD,EQUALS,PERIOD} = SPECIAL_BUTTONS
 const {zero,one,two,three,four,five,six,seven,eight,nine} = NORMAL_BUTTONS
 
+export const buttonClickReturnValue = (button, value=0)=>{
+  let newValue;
+  if(button === CE) return 0
+  if(button === DEL){
+    if(value === 0 ) return 0
+    let reformatValue = (typeof value !== 'String') ? value.toString() : value
+    let newValue = reformatValue.slice(0,-1) || 0
+    return newValue
+  }
+  let regex = /[0-9.]/
+  if(!regex.test(button)) return 0
+  newValue = (parseFloat(value) !== 0) ? value + `${button}` : button
+  return newValue
+}
+
 
 export default function Buttons({currentValue,setCurrentValue, name = ''}) {
   const [buttons,setButtons] = useState([])
@@ -38,26 +53,12 @@ export default function Buttons({currentValue,setCurrentValue, name = ''}) {
     let newValue = buttonClickReturnValue(value, currentValue)
     setCurrentValue(newValue)
   }
-  const buttonClickReturnValue = (button, value=0)=>{
-    let newValue;
-    if(button === CE) return 0
-    if(button === DEL){
-      if(value === 0 ) return 0
-      let reformatValue = (typeof value !== 'String') ? value.toString() : value
-      let newValue = reformatValue.slice(0,-1) || 0
-      return newValue
-    }
-    let regex = /[0-9.]/
-    if(!regex.test(button)) return 0
-    newValue = (value !== 0) ? value + `${button}` : button
-    return newValue
-  }
+  
   
   useEffect(()=>{
     const converterButtons = [BLANK,CE,DEL,seven,eight,nine,four,five,six,one,two,three,BLANK,zero,PERIOD]
     if(name === 'converter') setButtons(converterButtons)
   }, [name])
-  console.log(buttons)
     return (
         <div className={`buttonCon buttonCon__${name}`}>
         {

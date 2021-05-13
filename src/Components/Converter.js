@@ -1,5 +1,5 @@
 import React, {useReducer, useEffect,useState,useRef} from 'react'
-import { ACTIONS, BUTTONS, SPECIAL_BUTTONS,  } from '../App';
+import { ACTIONS,  } from '../App';
 import ConverterTile from './ConverterTile';
 import Buttons from './Buttons'
 import axios from 'axios'
@@ -46,17 +46,20 @@ export const data = [
     }
 ]
 
-function reducer(tiles,action){
-    switch(action.type){
+function reducer(tiles,{type,payload}){
+    switch(type){
+      case ACTIONS.UPDATE_ACTIVE_TILE:
+        return tiles.map(tile=>{
+          return {...tile, active: (tile.id === payload.id)} 
+        })
       case ACTIONS.UPDATE_ACTIVE_VALUE:
         return tiles.map(tile=>{
-          if(tile.ref !== action.payload.activeTile) return tile
-          return {...tile, value: action.payload.value}
+          if(tile.ref !== payload.activeTile) return {...tile}
+          return {...tile, value: payload.value}
         })
       case ACTIONS.UPDATE_UNIT: 
       return tiles.map(tile=>{
-        let payload = action.payload
-        let newUnit = {name: action.payload.name, rate: action.payload.rate}
+        let newUnit = {name: payload.name, rate: payload.rate}
         
         if(!payload.id) return {...tile, unit: newUnit }
   
@@ -72,7 +75,6 @@ function reducer(tiles,action){
         })
       case ACTIONS.UPDATE_TILE_VALUES: 
         return tiles.map(tile=>{
-          let payload = action.payload
           if(tile.id === payload.activeTile.id) return {...tile, value: parseFloat(payload.activeTile.value)}
           let newValue = payload.activeTile.value * (tile.unit.rate / payload.activeTile.rate)
           return {...tile, value: newValue}
@@ -84,33 +86,24 @@ function reducer(tiles,action){
 
 
 export default function Converter({category}) {
-  const {CE,DEL} = SPECIAL_BUTTONS
+  // const {CE,DEL} = SPECIAL_BUTTONS
   const upperTileRef = useRef()
   const lowerTileRef = useRef()
   const [tiles, dispatch] = useReducer(reducer,[
-      {id: 1,ref: upperTileRef,value:0, unit: {name: data[0].default, rate: data[0].units[data[0].default]}},
-      {id: 2,ref: lowerTileRef,value:0, unit: {name: data[0].default, rate: data[0].units[data[0].default]}},
+      {id: 1,ref: upperTileRef,value:0, active:true, unit: {name: data[0].default, rate: data[0].units[data[0].default]}},
+      {id: 2,ref: lowerTileRef,value:0, active:false, unit: {name: data[0].default, rate: data[0].units[data[0].default]}},
   ])
-  const [activeTile, setActiveTile] = useState(upperTileRef)
-  const [activeValue, setActiveValue] = useState(0)
 
-  
+  const [inputValue, setInputValue] = useState(0)
 
-  
   useEffect(()=>{
-    setActiveValue(activeTile.current.value)
-  },[activeTile])
-  useEffect(()=>{
-    dispatch({type: ACTIONS.UPDATE_ACTIVE_VALUE, payload: {value:activeValue, activeTile: activeTile}})
-  },[activeValue])
+    dispatch({type: ACTIONS.UPDATE_ACTIVE_VALUE, payload: {value:inputValue}})
+  },[inputValue])
 
   useEffect(()=>{
     let newData = data.filter(value =>  value.category === category)
-    console.log(category)
-    console.log(data)
     let unitName = newData[0].default
     let unitRate = newData[0].units[unitName]
-    setActiveTile( (prevActiveTile) => {return { ...prevActiveTile, value: 0 , rate: unitRate}})
     dispatch({type: ACTIONS.UPDATE_UNIT, payload: { name: unitName, rate: unitRate }})
   }, [category])
 
@@ -125,7 +118,6 @@ export default function Converter({category}) {
         units: {...res.data.rates, EUR:1}
       }
       data.push(newItem)
-      console.log(data)
     }).catch(err=>{
       console.log(`Error Here: ${err}`)
     })
@@ -139,17 +131,14 @@ export default function Converter({category}) {
                   category={category} 
                   tile={tile}
                   tiles={tiles}
-                  activeTile={activeTile}
-                  setActiveTile={setActiveTile}
                   dispatch={dispatch}
                   />
                   )
               }
           </div>
           <Buttons 
-            buttons={BUTTONS.CONVERTER} 
-            currentValue={activeValue} 
-            setCurrentValue={setActiveValue} 
+            currentValue={inputValue} 
+            setCurrentValue={setInputValue} 
             name='converter' />
       </>
   )

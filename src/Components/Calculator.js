@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import Buttons from './Buttons'
 import CalculatorTile from './CalculatorTile'
-import { SPECIAL_BUTTONS, BUTTONS, buttonClickReturnValue} from '../App';
+import {SPECIAL_BUTTONS, buttonClickReturnValue} from './Buttons'
 
 export default function Calculator({category}) {
     const [tile, setTile] = useState(0)
@@ -37,11 +37,10 @@ export default function Calculator({category}) {
 
     
     
-    let buttons = Object.entries(BUTTONS).filter(([key,value],index)=>{return key === category.toUpperCase()})
     return (
         <>
             <CalculatorTile value={tile} equation={equation}/>
-            <Buttons buttons={buttons[0][1]} action={handleButtonClick} name='calculator'/>  
+            <Buttons name='calculator'/>  
         </>
     )
 }
