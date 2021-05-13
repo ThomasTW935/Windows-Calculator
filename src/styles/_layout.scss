@@ -79,13 +79,14 @@
 }
 
 .buttonCon{
-    height: 50%;
     display:grid;
     gap: 3px;
     &__converter{
+        height: 50%;
         grid-template: repeat(5,1fr) / repeat(3,1fr);
     }
-    &__calculator{
+    &__CALCULATOR{
+        height: 55%;
         grid-template: repeat(5,1fr) / repeat(4,1fr);
     }
 }

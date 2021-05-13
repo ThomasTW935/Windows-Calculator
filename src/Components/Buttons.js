@@ -57,7 +57,15 @@ export default function Buttons({currentValue,setCurrentValue, name = ''}) {
   
   useEffect(()=>{
     const converterButtons = [BLANK,CE,DEL,seven,eight,nine,four,five,six,one,two,three,BLANK,zero,PERIOD]
+    const calculatorButtons = [
+      CE,C,DEL,DIVIDE,
+      seven,eight,nine,MULTIPLY,
+      four,five,six,SUBTRACT,
+      one,two,three,ADD,
+      BLANK,zero,PERIOD, EQUALS]
     if(name === 'converter') setButtons(converterButtons)
+    if(name === 'CALCULATOR') setButtons(calculatorButtons)
+
   }, [name])
     return (
         <div className={`buttonCon buttonCon__${name}`}>
@@ -69,7 +77,7 @@ export default function Buttons({currentValue,setCurrentValue, name = ''}) {
               return <button data-value={button.value} className={className} key={index} onClick={ ()=>{ handleButtonClick(button.value) } }>{button.label}</button>
             }        
           )
-          }
+        }
       </div>
     )
 }

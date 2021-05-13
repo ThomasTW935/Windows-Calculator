@@ -37,7 +37,7 @@ function App() {
         />
 
       { (type === 'CONVERTER') && <Converter category={category}/>}
-      {/* { (type === 'CALCULATOR') && <Calculator category={category}/>} */}
+      { (type === 'CALCULATOR') && <Calculator category={category}/>}
 
       
     </div>
