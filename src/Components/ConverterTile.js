@@ -1,4 +1,3 @@
-import { Tooltip } from '@material-ui/core';
 import React from 'react';
 import {ACTIONS} from '../App';
 import {data} from './Converter';
@@ -11,16 +10,16 @@ function ConverterTile({category,tile,dispatch}) {
         let dataset = target.options[target.selectedIndex].dataset
         let {name,rate} = dataset
         dispatch({type: ACTIONS.UPDATE_UNIT, payload: {id: id,name:name, rate: rate}})
-        if(!tile.active) dispatch({ type: ACTIONS.UPDATE_INACTIVE_TILE_VALUE, payload:{} })
+        dispatch({ type: ACTIONS.UPDATE_INACTIVE_TILE_VALUE, payload:{} })
     }
     function handleTileClick(id){
         dispatch({type: ACTIONS.UPDATE_ACTIVE_TILE, payload:{ id: id }})
     }
     return (
-        <div className='tilee'>
+        <div className='tile'>
             <input 
                 ref={tile.ref} 
-                value={tile.value}
+                value={tile.value.toLocaleString('en-US')}
                 style={{fontWeight:tile.active ? 'bold' : ''} }  
                 onClick={ () => handleTileClick(tile.id) }
                 autoFocus={ tile.active }

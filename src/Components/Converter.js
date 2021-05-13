@@ -92,32 +92,37 @@ export default function Converter({category}) {
   const [inputValue, setInputValue] = useState(0)
 
   useEffect(()=>{
-    dispatch({type: ACTIONS.UPDATE_ACTIVE_VALUE, payload: {value:inputValue}})
+    dispatch({type: ACTIONS.UPDATE_ACTIVE_VALUE, payload: {value:inputValue.toLocaleString('en-US')}})
     dispatch({ type: ACTIONS.UPDATE_INACTIVE_TILE_VALUE, payload: {} })
   },[inputValue])
 
-  useEffect(()=>{
-    let newData = data.filter(value =>  value.category === category)
-    let unitName = newData[0].default
-    let unitRate = newData[0].units[unitName]
-    dispatch({type: ACTIONS.UPDATE_UNIT, payload: { name: unitName, rate: unitRate }})
-  }, [category])
+  
 
   useEffect(()=>{
     const apiUrl = "https://api.ratesapi.io/api/latest"
-    let newItem = {}
     axios.get(apiUrl).then(res=>{
-      newItem = {
+      let rates =  {...res.data.rates, EUR:1}
+      let sortedRates = Object.fromEntries(Object.entries(rates).sort())
+      let newItem = {
         id:4,
         category: 'Currency',
         default: res.data.base,
-        units: {...res.data.rates, EUR:1}
+        units: sortedRates
       }
       data.push(newItem)
     }).catch(err=>{
       console.log(`Error Here: ${err}`)
     })
   }, [])
+
+  useEffect(()=>{
+    let newData = data.filter(value =>  value.category === category)
+    let unitName = newData[0].default
+    let unitRate = newData[0].units[unitName]
+    dispatch({type: ACTIONS.UPDATE_UNIT, payload: { name: unitName, rate: unitRate }})
+  }, [])
+  console.log(data)
+  console.log(tiles)
   return (
       <>
           <div className='tileCon'>
