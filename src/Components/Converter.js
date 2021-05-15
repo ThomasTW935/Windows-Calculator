@@ -1,50 +1,8 @@
 import React, {useReducer, useEffect,useState,useRef} from 'react'
-import { ACTIONS,  } from '../App';
 import ConverterTile from './ConverterTile';
 import Buttons from './Buttons'
 import axios from 'axios'
-
-export const data = [
-    {
-      id: 0,
-      category: 'Weight',
-      default: 'grams',
-      units: {
-        carats: 5,
-        milligrams: 1000,
-        centigrams: 100,
-        decigrams: 10,
-        grams: 1,
-        dekagrams: .1,
-        hecktograms: 0.01,
-        kilograms: .001,
-        metric_tonnes: .000001,
-        ounces: 0.035274,
-        pounds: 0.002205,
-        stone: 0.000157,
-        short_tons_US: 0.000001,
-        long_tons_UK: 0.000000984206528
-      }
-    },
-    {
-      id: 1,
-      category: 'Length',
-      default: 'meter',
-      units: {
-        meter: 1,
-        kilometer: .001,
-      }
-    },
-    {
-      id: 2,
-      category: 'Volume',
-      default: 'liters',
-      units: {
-        milliliters: 1000,
-        liters: 1,
-      }
-    }
-]
+import { ACTIONS, CONVERTER_DATA as data, SPECIAL_BUTTONS } from '../Data';
 
 function reducer(tiles,{type,payload}){
     switch(type){
@@ -77,11 +35,8 @@ function reducer(tiles,{type,payload}){
       default: return tiles
     }
 }
-
-
-
+const {CE,DEL} = SPECIAL_BUTTONS
 export default function Converter({category}) {
-  // const {CE,DEL} = SPECIAL_BUTTONS
   const upperTileRef = useRef()
   const lowerTileRef = useRef()
   const [tiles, dispatch] = useReducer(reducer,[
@@ -90,6 +45,8 @@ export default function Converter({category}) {
   ])
 
   const [inputValue, setInputValue] = useState(0)
+
+  
 
   useEffect(()=>{
     dispatch({type: ACTIONS.UPDATE_ACTIVE_VALUE, payload: {value:inputValue.toLocaleString('en-US')}})
@@ -121,26 +78,44 @@ export default function Converter({category}) {
     let unitRate = newData[0].units[unitName]
     dispatch({type: ACTIONS.UPDATE_UNIT, payload: { name: unitName, rate: unitRate }})
   }, [])
-  console.log(data)
-  console.log(tiles)
+
+  function buttonClickReturnValue(button, value=0, name=''){
+    console.log(button)
+    let newValue;
+    if(button === CE.value) return 0
+    if(button === DEL.value){
+      if(value === 0 ) return 0
+      let reformatValue = (typeof value !== 'String') ? value.toString() : value
+      let newValue = reformatValue.slice(0,-1) || 0
+      return newValue
+    }
+    let regex = /[0-9.]/
+    if(!regex.test(button)) return value + `${button}`
+    newValue = (parseFloat(value) !== 0) ? value + `${button}` : button
+    return newValue
+  }
+  function handleButtonAction(value){
+    let newValue = buttonClickReturnValue(value, inputValue)
+    setInputValue(newValue)
+  }
+
   return (
       <>
-          <div className='tileCon'>
-              { tiles.map((tile,index)=>
-                  <ConverterTile 
-                  key={tile.id} 
-                  category={category} 
-                  tile={tile}
-                  tiles={tiles}
-                  dispatch={dispatch}
-                  />
-                  )
-              }
-          </div>
-          <Buttons 
-            currentValue={inputValue} 
-            setCurrentValue={setInputValue} 
-            name='converter' />
+        <div className='tileCon'>
+            { tiles.map((tile,index)=>
+                <ConverterTile 
+                key={tile.id} 
+                category={category} 
+                tile={tile}
+                tiles={tiles}
+                dispatch={dispatch}
+                />
+                )
+            }
+        </div>
+        <Buttons 
+          action={handleButtonAction}
+          name='converter' />
       </>
   )
 }

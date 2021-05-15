@@ -1,6 +1,5 @@
 import React from 'react';
-import {ACTIONS} from '../App';
-import {data} from './Converter';
+import {ACTIONS, CONVERTER_DATA as data} from '../Data';
 
 function ConverterTile({category,tile,dispatch}) {
     let {id,value} = tile
