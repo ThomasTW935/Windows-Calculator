@@ -29,7 +29,7 @@ export default function Buttons({name = '', action}) {
           {
             if(button.value === '' ) return <span key={index}>{button.label}</span>
             let className = (/[0-9.]/.test(button.value)) ? 'button button__normal' : 'button button__special'
-            return <button data-value={button.value} className={className} key={index} onClick={ ()=>{ action(button.value) } }>{button.label}</button>
+            return <button data-value={button.value} aria-label={button.value} className={className} key={index} onClick={ ()=>{ action(button.value) } }>{button.label}</button>
           }        
         )
       }

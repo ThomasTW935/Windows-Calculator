@@ -4,7 +4,6 @@ import CalculatorTile from './CalculatorTile'
 import {evaluate} from 'mathjs'
 import {SPECIAL_BUTTONS, NORMAL_BUTTONS} from '../Data'
 import { useReducer } from 'react'
-import { Satellite } from '@material-ui/icons'
 
 const ACTIONS = {
   CLEAR: 'clear',
@@ -27,7 +26,7 @@ function reducer(state,{type,payload}){
 }
 export default function Calculator({category}) {
   const [state,dispatch] = useReducer(reducer, {value: 0, equation: ''})
-  const [value, setValue] = useState(0)
+  const [inputValue, setInputValue] = useState(0)
 
   const {C,CE,EQUALS, MULTIPLY,DEL} = SPECIAL_BUTTONS
 
