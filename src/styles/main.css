@@ -94,12 +94,16 @@ select {
   border: none;
 }
 
+.tile-calculator {
+  font-size: 3rem;
+}
+
 .tile .fontBold {
   font-weight: bold;
 }
 
 .tile .equation {
-  font-size: .8rem;
+  font-size: 1rem;
   height: .8rem;
   margin: 1em 0;
 }
@@ -285,7 +289,7 @@ select {
 }
 
 .buttonCon__CALCULATOR {
-  height: 55%;
+  height: 100%;
   -ms-grid-rows: (1fr)[5];
   -ms-grid-columns: (1fr)[4];
       grid-template: repeat(5, 1fr)/repeat(4, 1fr);

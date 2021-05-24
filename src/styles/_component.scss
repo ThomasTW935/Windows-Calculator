@@ -8,11 +8,14 @@
         outline: none;
         border: none;
     }
+    &-calculator{
+        font-size: 3rem;
+    }
     .fontBold{
         font-weight: bold;
     }
     .equation{
-        font-size: .8rem;
+        font-size: 1rem;
         height: .8rem;
         margin: 1em 0;
     }
