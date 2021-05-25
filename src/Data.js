@@ -32,7 +32,7 @@ export const CONVERTER_DATA = [
       ounces: 0.035274,
       pounds: 0.002205,
       stone: 0.000157,
-      short_tons_US: 0.000001,
+      "short tons US": 0.000001,
       long_tons_UK: 0.000000984206528
     }
   },
@@ -41,8 +41,17 @@ export const CONVERTER_DATA = [
     category: 'Length',
     default: 'meter',
     units: {
+      nanometers: 1000000000,
+      microns: 1000000,
+      millimeters: 1000,
+      centimeters: 100,
       meter: 1,
       kilometer: .001,
+      inches: 39.37008,
+      feet: 3.28084,
+      yards: 1.093613,
+      miles: 0.000621,
+      "nautical miles": 0.00054
     }
   },
   {

@@ -31,7 +31,7 @@ function ConverterTile({category,tile,dispatch}) {
                             if(item.category === category)
                                 {
                                     return Object.keys(item['units']).map((value,index)=>
-                                    { 
+                                    {
                                         return <option key={index} data-name={value} data-rate={item.units[value]} >{value}</option> 
                                     }
                                 )}
