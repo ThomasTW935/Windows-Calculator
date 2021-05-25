@@ -31,19 +31,19 @@ export default function Converter({category}) {
   //   })
   // }, [])
 
-  function buttonClickReturnValue(button, value=0, name=''){
-    console.log(button)
+  function buttonClickReturnValue(button, currentValue=0, name=''){
+    let {value} = button
     let newValue;
-    if(button === CE.value) return 0
-    if(button === DEL.value){
-      if(value === 0 ) return 0
-      let reformatValue = (typeof value !== 'String') ? value.toString() : value
+    if(value === CE.value) return 0
+    if(value === DEL.value){
+      if(currentValue === 0 ) return 0
+      let reformatValue = (typeof currentValue !== 'String') ? currentValue.toString() : currentValue
       let newValue = reformatValue.slice(0,-1) || 0
       return newValue
     }
     let regex = /[0-9.]/
-    if(!regex.test(button)) return value + `${button}`
-    newValue = (parseFloat(value) !== 0) ? value + `${button}` : button
+    if(!regex.test(value)) return currentValue + `${value}`
+    newValue = (parseFloat(currentValue) !== 0) ? currentValue + `${value}` : value
     return newValue
   }
   function handleButtonAction(value){

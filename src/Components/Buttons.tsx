@@ -5,9 +5,14 @@ import {SPECIAL_BUTTONS, NORMAL_BUTTONS} from '../Data'
 const {BLANK,CE,C,DEL,DIVIDE,MULTIPLY,SUBTRACT,ADD,EQUALS,PERIOD} = SPECIAL_BUTTONS
 const {zero,one,two,three,four,five,six,seven,eight,nine} = NORMAL_BUTTONS
 
-export default function Buttons({name = '', action}) {
+type ButtonsProps = {
+  name:string,
+  action: (arg0: Object) => void
+}
+
+export default function Buttons({name = '', action}: ButtonsProps) {
   const buttons = getButtons(name) 
-  function getButtons(name){
+  function getButtons(name:string){
     const converterButtons = [BLANK,CE,DEL,seven,eight,nine,four,five,six,one,two,three,BLANK,zero,PERIOD]
     const calculatorButtons = [
       CE,C,DEL,DIVIDE,
@@ -29,7 +34,7 @@ export default function Buttons({name = '', action}) {
           {
             if(button.value === '' ) return <span key={index}>{button.label}</span>
             let className = (/[0-9.]/.test(button.value)) ? 'button button__normal' : 'button button__special'
-            return <button data-value={button.value} aria-label={button.value} className={className} key={index} onClick={ ()=>{ action(button.value) } }>{button.label}</button>
+            return <button data-value={button.value} aria-label={button.value} className={className} key={index} onClick={ ()=>{ action(button) } }>{button.label}</button>
           }        
         )
       }
