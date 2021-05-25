@@ -64,6 +64,18 @@ export const CONVERTER_DATA = [
     }
   }
 ]
+export const TEST_DATA = [
+  {
+    id: 0,
+    category: 'length',
+    default: 'meter',
+    units: {
+      "m": "meters",
+      "km": "kilometers",
+      "mi": "miles",
+    }
+  }
+]
 
 export const SPECIAL_BUTTONS = {
   BLANK: {label: '', value: ''},

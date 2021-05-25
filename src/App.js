@@ -9,8 +9,8 @@ export const CATEGORIES = {
 }
 
 function App() {
-  const [category, setCategory] = useState(CATEGORIES.CALCULATOR[0])
-  const [type, setType] = useState('CALCULATOR')
+  const [category, setCategory] = useState(CATEGORIES.CONVERTER[1])
+  const [type, setType] = useState('CONVERTER')
 
 
   return (

@@ -1,12 +1,19 @@
-import React, {useState} from 'react';
+import React, {ChangeEvent, ChangeEventHandler, InputHTMLAttributes, useState} from 'react';
 import {  CATEGORIES } from '../App';
 
-function Navigation({category,setCategory, setType}) {
+type Props = {
+    category: string,
+    setCategory: (arg0:string)=>void,
+    setType: (arg0:string)=>void,
+}
+
+function Navigation({category,setCategory, setType}: Props) {
     
-    function handleRadioChange(e){
-        let target = e.target
+    function handleRadioChange(e:ChangeEvent<HTMLInputElement>){
+        const {target} = e
         setCategory(target.value)
-        setType(target.dataset.type)
+        console.log(target.dataset.type)
+        if(target.dataset.type) setType(target.dataset.type)
         setShowNav( prev=>{ return !prev } )
     }
 
@@ -32,7 +39,7 @@ function Navigation({category,setCategory, setType}) {
                                         value={value} 
                                         checked={(value === category)}
                                         data-type={key}
-                                        onChange={ (e)=> handleRadioChange(e) } />
+                                        onChange={ handleRadioChange } />
                                     <span>#</span>
                                     <span>{value}</span>
                                         
