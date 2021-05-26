@@ -1,4 +1,4 @@
-import React, {ChangeEvent, ChangeEventHandler, InputHTMLAttributes, useState} from 'react';
+import React,{ChangeEvent, useState} from 'react';
 import {  CATEGORIES } from '../App';
 
 type Props = {

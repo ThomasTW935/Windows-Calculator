@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from 'react'
-import {SPECIAL_BUTTONS, NORMAL_BUTTONS} from '../Data'
+import React from 'react'
+import {SPECIAL_BUTTONS, NORMAL_BUTTONS, Button} from '../Data'
 
 
 const {BLANK,CE,C,DEL,DIVIDE,MULTIPLY,SUBTRACT,ADD,EQUALS,PERIOD} = SPECIAL_BUTTONS
@@ -7,7 +7,7 @@ const {zero,one,two,three,four,five,six,seven,eight,nine} = NORMAL_BUTTONS
 
 type ButtonsProps = {
   name:string,
-  action: (arg0: Object) => void
+  action: (arg0: Button) => void
 }
 
 export default function Buttons({name = '', action}: ButtonsProps) {

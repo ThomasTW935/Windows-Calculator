@@ -1,22 +1,17 @@
-import React, { FormEvent } from 'react';
+import React, { Dispatch, FormEvent } from 'react';
 import {ACTIONS, TEST_DATA as data} from '../Data';
-
-
-interface state {
-    id:number,
-    value:number,
-    unit:string, 
-    isActive: boolean
-}
+import {tile,Action} from './Converter'
 
 type Props = {
-    category: string,
-    state: state,
-    dispatch: (arg0: Object)=> void,
+    key: number; 
+    category: string; 
+    tile: tile; 
+    active: number; 
+    dispatch: Dispatch<Action>
 }
 
-function ConverterTile({category,state,dispatch}: Props) {
-    let {id,value,unit,isActive} = state
+function ConverterTile({category,tile,active,dispatch}: Props) {
+    let {id,value,unit} = tile
     function handleOptionChange(e:FormEvent<HTMLSelectElement>){
         const target = e.currentTarget
         dispatch({type: ACTIONS.UPDATE_UNIT, payload:{ id: id, unit: target.value }})
@@ -24,14 +19,13 @@ function ConverterTile({category,state,dispatch}: Props) {
     function handleTileClick(id:number){
         dispatch({type: ACTIONS.UPDATE_ACTIVE_TILE, payload:{ id: id }})
     }
-    console.log(category)
     return (
         <div className='tile'>
             <input 
                 value={value.toLocaleString('en-US')}
-                style={{fontWeight:isActive ? 'bold' : 'normal'} }  
+                style={{fontWeight:active === id ? 'bold' : 'normal'} }  
                 onClick={ () => handleTileClick(id) }
-                autoFocus={ isActive }
+                autoFocus={ active === id }
                 readOnly
                 />
             <select className='select' value={unit} onChange={handleOptionChange}>
