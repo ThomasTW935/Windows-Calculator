@@ -5,7 +5,7 @@ import Navigation from './Components/Navigation';
 
 export const CATEGORIES = {
   CALCULATOR:['Standard', 'Scientific', 'Programmer', 'Date Calculation'],
-  CONVERTER:['Weight', 'Length', 'Volume','Currency'],
+  CONVERTER:['Weight', 'length', 'Volume','Currency'],
 }
 
 function App() {

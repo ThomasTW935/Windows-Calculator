@@ -3,8 +3,10 @@ import ConverterTile from './ConverterTile';
 import Buttons from './Buttons'
 import { SPECIAL_BUTTONS } from '../Data';
 
-function reducer(state,{type,payload}){
-
+function reducer(states,{type,payload}){
+  switch(type){
+    default: return states
+  }
 }
 
 const {CE,DEL} = SPECIAL_BUTTONS
