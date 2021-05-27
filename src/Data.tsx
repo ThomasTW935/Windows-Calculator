@@ -8,9 +8,9 @@ export enum ACTIONS{
   // RESET_NUM= 'reset-num',
   UPDATE_UNIT= 'update-unit',
   // UPDATE_TILE_VALUES= 'update-tile-values',
-  // UPDATE_ACTIVE_VALUE= 'update-active-value',
+  UPDATE_ACTIVE_VALUE= 'update-active-value',
   UPDATE_ACTIVE_TILE= 'update-active-tile',
-  // UPDATE_INACTIVE_TILE_VALUE= 'update-inactive-tile-value',
+  UPDATE_INACTIVE_TILE_VALUE= 'update-inactive-tile-value',
 }
 
 
@@ -67,14 +67,45 @@ export const CONVERTER_DATA = [
 export const TEST_DATA = [
   {
     id: 0,
-    category: 'length',
+    category: 'volume',
     default: 'meter',
     units: {
       "m": "meters",
       "km": "kilometers",
       "mi": "miles",
     }
-  }
+  },
+  {
+    id: 1,
+    category: 'weight',
+    default: 'meter',
+    units: {
+      "m": "meters",
+      "km": "kilometers",
+      "mi": "miles",
+    }
+  },
+  {
+    id: 2,
+    category: 'length',
+    default: 'meter',
+    units: {
+      "nm": "nanometers",
+      "mm": "millimeters",
+      "cm": "centimeters",
+      "m": "meters",
+      "km": "kilometers",
+      "mi": "miles",
+      "in":"inch" , 
+      "ft":"foot" , 
+      "yd":"yard" ,  
+      "li":"link" , 
+      "rd":"rod" , 
+      "ch":"chain" , 
+      "A":"angstrom", 
+      "thou":"mil"
+    }
+  },
 ]
 
 export interface Button{

@@ -7,14 +7,16 @@ type Props = {
     category: string; 
     tile: tile; 
     active: number; 
+    activeValue: string | number
     dispatch: Dispatch<Action>
 }
 
-function ConverterTile({category,tile,active,dispatch}: Props) {
+function ConverterTile({category,tile,active,activeValue,dispatch}: Props) {
     let {id,value,unit} = tile
     function handleOptionChange(e:FormEvent<HTMLSelectElement>){
         const target = e.currentTarget
         dispatch({type: ACTIONS.UPDATE_UNIT, payload:{ id: id, unit: target.value }})
+        dispatch({type: ACTIONS.UPDATE_INACTIVE_TILE_VALUE, payload:{ value:Number(activeValue) }})
     }
     function handleTileClick(id:number){
         dispatch({type: ACTIONS.UPDATE_ACTIVE_TILE, payload:{ id: id }})
