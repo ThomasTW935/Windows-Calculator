@@ -13,12 +13,20 @@ type Props = {
 }
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    selectLabel:{color: 'white'},
+    selectLabel:{
+      color: 'white',
+      textTransform: 'capitalize'
+    },
     select: {
         color: 'white',
         backgroundColor: 'transparent',
+        textTransform: 'capitalize'
+    },
+    menuSelected: {
+      backgroundColor: '#484848',
     },
     menu:{
+      textTransform: 'capitalize',
         "&:hover": {
             backgroundColor: '#484848'
         }
