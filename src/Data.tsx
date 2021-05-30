@@ -67,28 +67,7 @@ export const CONVERTER_DATA = [
 export const TEST_DATA = [
   {
     id: 0,
-    category: 'volume',
-    default: 'meter',
-    units: {
-      "m": "meters",
-      "km": "kilometers",
-      "mi": "miles",
-    }
-  },
-  {
-    id: 1,
-    category: 'weight',
-    default: 'meter',
-    units: {
-      "m": "meters",
-      "km": "kilometers",
-      "mi": "miles",
-    }
-  },
-  {
-    id: 2,
     category: 'length',
-    default: 'meter',
     units: {
       "nm": "nanometers",
       "mm": "millimeters",
@@ -96,14 +75,14 @@ export const TEST_DATA = [
       "m": "meters",
       "km": "kilometers",
       "mi": "miles",
-      "in":"inch" , 
-      "ft":"foot" , 
-      "yd":"yard" ,  
-      "li":"link" , 
-      "rd":"rod" , 
-      "ch":"chain" , 
-      "A":"angstrom", 
-      "thou":"mil"
+      "in": "inch" , 
+      "ft": "foot" , 
+      "yd": "yard" ,  
+      "li": "link" , 
+      "rd": "rod" , 
+      "ch": "chain" , 
+      "A": "angstrom", 
+      "thou": "mil"
     }
   },
 ]

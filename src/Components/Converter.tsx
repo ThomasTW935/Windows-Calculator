@@ -41,8 +41,8 @@ export type Action =
 
 const initialState: State = {
   tiles: [
-    {id:1,value:0,unit:'m'},
-    {id:2,value:0,unit:'km'},
+    {id:1,value:0,unit:'meters'},
+    {id:2,value:0,unit:'kilometers'},
   ],
   active:1
 }
